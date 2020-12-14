@@ -1,3 +1,5 @@
+package com.github.olorini;
+
 public class OutputUtils {
 
 	public static void showGameField(char[][] game) {

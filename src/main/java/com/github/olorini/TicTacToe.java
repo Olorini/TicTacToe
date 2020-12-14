@@ -1,3 +1,7 @@
+package com.github.olorini;
+
+import com.github.olorini.gameProcesses.GameResult;
+
 public class TicTacToe {
 
 	public static final char X = 'X';
@@ -14,8 +18,8 @@ public class TicTacToe {
 		return field;
 	}
 
-	public boolean isEmptyCell(int i, int j) {
-		return field[i][j] == EMPTY;
+	public boolean isNotEmptyCell(int i, int j) {
+		return field[i][j] != EMPTY;
 	}
 	
 	public void fillCell(int i, int j, char symbol) {
