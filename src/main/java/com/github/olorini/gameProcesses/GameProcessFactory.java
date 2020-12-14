@@ -11,13 +11,13 @@ public class GameProcessFactory {
 
 	public static GameProcess getProcess(String type, TicTacToe game) {
 		switch (type) {
-			case "user easy":
+			case "user medium":
 				return new GameProcess(game, new HumanGamer(game, X), new AlGamer(game, O));
-			case "easy user":
+			case "medium user":
 				return new GameProcess(game, new AlGamer(game, X), new HumanGamer(game, O));
 			case "user user":
 				return new GameProcess(game, new HumanGamer(game, X), new HumanGamer(game, O));
-			case "easy easy":
+			case "medium medium":
 				return new GameProcess(game, new AlGamer(game, X), new AlGamer(game, O));
 			default: throw new RuntimeException("Unknown");
 		}

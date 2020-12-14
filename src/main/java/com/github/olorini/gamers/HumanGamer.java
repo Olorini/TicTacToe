@@ -27,7 +27,7 @@ public class HumanGamer implements IGamer {
 		ValidationResult validationResult = isValidCoordinates(game, userCoordinates, digitCoordinates);
 		if (validationResult == ValidationResult.OK) {
 			makeMove(digitCoordinates[0], digitCoordinates[1]);
-			OutputUtils.showGameField(game.getField());
+			OutputUtils.showGameField(game.getBoard());
 		} else {
 			System.out.println(validationResult);
 			play(scanner);

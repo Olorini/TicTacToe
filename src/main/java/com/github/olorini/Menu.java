@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-	public static final List<String> USER_TYPES = Arrays.asList("user", "easy");
+	public static final List<String> USER_TYPES = Arrays.asList("user", "easy", "medium");
 
 	public void start(Scanner scanner) {
 		do {
@@ -33,7 +33,7 @@ public class Menu {
 					fillGameField(gameState);
 					OutputUtils.showGameField(gameState);
 					TicTacToe game = new TicTacToe();
-					game.setField(gameState);
+					game.setBoard(gameState);
 					String gamersType = firstGamer + " " + secondGamer;
 					GameProcess process = GameProcessFactory.getProcess(gamersType, game);
 					process.play(scanner);

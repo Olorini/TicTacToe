@@ -1,8 +1,10 @@
 package com.github.olorini.gamers;
 
 import com.github.olorini.OutputUtils;
+import com.github.olorini.PossibleMoveResult;
 import com.github.olorini.TicTacToe;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -21,18 +23,87 @@ public class AlGamer implements IGamer {
 
 	@Override
 	public void play(Scanner scanner) {
-		System.out.println("Making move level \"easy\"");
+		System.out.println("Making move level \"medium\"");
 		makeMove();
-		OutputUtils.showGameField(game.getField());
+		OutputUtils.showGameField(game.getBoard());
 	}
 
-	public void makeMove() {
+	private void makeMove() {
+		Integer[] moveCoordinate = findVictoryCell();
+		game.fillCell(moveCoordinate[0], moveCoordinate[1], symbol);
+	}
+
+	private Integer[] findVictoryCell() {
+		List<Integer[]> history = game.getMovesHistory();
+		if (!history.isEmpty()) {
+			if (history.size() > 1) {
+				Integer[] lastOwnMove = history.get(history.size() - 2);
+				PossibleMoveResult result = searchMoveCell(game.getBoard(), lastOwnMove, symbol);
+				if (result.isVictoryMove()) {
+					return result.getEmptyCellCoordinate();
+				}
+			}
+			Integer[] lastOpponentMove = history.get(history.size() - 1);
+			PossibleMoveResult result = searchMoveCell(game.getBoard(), lastOpponentMove, getOpponentSymbol());
+			if (result.isVictoryMove()) {
+				return result.getEmptyCellCoordinate();
+			}
+		}
+		return getRandomCoordinate();
+	}
+
+	PossibleMoveResult searchMoveCell(char[][] board, Integer[] lastOwnMove, char s) {
+		int x = lastOwnMove[0];
+		int y = lastOwnMove[1];
+		PossibleMoveResult rowResult = new PossibleMoveResult();
+		PossibleMoveResult columnResult = new PossibleMoveResult();
+		PossibleMoveResult firstDiagonalResult = new PossibleMoveResult();
+		PossibleMoveResult secondDiagonalResult = new PossibleMoveResult();
+		for (int i = 0; i < 3; i++) {
+			if (board[i][y] == s) {
+				rowResult.incrementSymbolCounter();
+			} else if (board[i][y] == TicTacToe.EMPTY) {
+				rowResult.setEmptyCellCoordinate(new Integer[]{i, y});
+			}
+			if (board[x][i] == s) {
+				columnResult.incrementSymbolCounter();
+			} else if (board[x][i] == TicTacToe.EMPTY) {
+				columnResult.setEmptyCellCoordinate(new Integer[]{x, i});
+			}
+			if (board[i][i] == s) {
+				firstDiagonalResult.incrementSymbolCounter();
+			} else if (board[i][i] == TicTacToe.EMPTY) {
+				firstDiagonalResult.setEmptyCellCoordinate(new Integer[]{i, i});
+			}
+			if (board[2 - i][i] == s) {
+				secondDiagonalResult.incrementSymbolCounter();
+			} else if (board[2 - i][i] == TicTacToe.EMPTY) {
+				secondDiagonalResult.setEmptyCellCoordinate(new Integer[]{2 - i, i});
+			}
+		}
+		if (rowResult.isVictoryMove()) {
+			return rowResult;
+		}
+		if (columnResult.isVictoryMove()) {
+			return columnResult;
+		}
+		if (firstDiagonalResult.isVictoryMove()) {
+			return firstDiagonalResult;
+		}
+		return secondDiagonalResult;
+	}
+
+	private Integer[] getRandomCoordinate() {
 		int i, j;
 		Random random = new Random();
 		do {
 			i = random.nextInt(3);
 			j = random.nextInt(3);
 		} while (game.isNotEmptyCell(i, j));
-		game.fillCell(i, j, symbol);
+		return new Integer[]{i, j};
+	}
+
+	private char getOpponentSymbol() {
+		return (symbol == TicTacToe.X) ? TicTacToe.O : TicTacToe.X;
 	}
 }
