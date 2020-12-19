@@ -1,6 +1,4 @@
-package com.github.olorini;
-
-import com.github.olorini.gameProcesses.GameResult;
+package com.github.olorini.gameProcesses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +9,16 @@ public class TicTacToe {
 	public static final char O = 'O';
 	public static final char EMPTY = '_';
 
-	private char[][] board;
-	private List<Integer[]> movesHistory = new ArrayList<>();
+	private final char[][] board;
+	private final List<Integer[]> movesHistory = new ArrayList<>();
 
-	public void setBoard(char[][] board) {
-		this.board = board;
+	public TicTacToe() {
+		this.board = new char[3][3];
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				this.board[i][j] = TicTacToe.EMPTY;
+			}
+		}
 	}
 
 	public char[][] getBoard() {
@@ -25,7 +28,7 @@ public class TicTacToe {
 	public boolean isNotEmptyCell(int i, int j) {
 		return board[i][j] != EMPTY;
 	}
-	
+
 	public void fillCell(int i, int j, char symbol) {
 		board[i][j] = symbol;
 		movesHistory.add(new Integer[] {i, j});
@@ -67,6 +70,5 @@ public class TicTacToe {
 	private GameResult getVictoryResult(char symbol) {
 		return (symbol == X) ? GameResult.X_WINS : GameResult.O_WINS;
 	}
-
 
 }

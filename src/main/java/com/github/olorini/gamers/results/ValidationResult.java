@@ -1,4 +1,4 @@
-package com.github.olorini.gamers;
+package com.github.olorini.gamers.results;
 
 public enum ValidationResult {
 

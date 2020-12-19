@@ -1,7 +1,8 @@
 package com.github.olorini.gamers;
 
 import com.github.olorini.OutputUtils;
-import com.github.olorini.TicTacToe;
+import com.github.olorini.gameProcesses.TicTacToe;
+import com.github.olorini.gamers.results.ValidationResult;
 
 import java.util.Scanner;
 

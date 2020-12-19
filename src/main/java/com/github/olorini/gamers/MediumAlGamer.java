@@ -1,22 +1,22 @@
 package com.github.olorini.gamers;
 
 import com.github.olorini.OutputUtils;
-import com.github.olorini.PossibleMoveResult;
-import com.github.olorini.TicTacToe;
+import com.github.olorini.gameProcesses.TicTacToe;
+import com.github.olorini.gamers.results.PossibleMoveResult;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Artificial intelligence
  */
-public class AlGamer implements IGamer {
+public class MediumAlGamer extends AIGamer implements IGamer {
 
 	private final TicTacToe game;
 	private final char symbol;
 
-	public AlGamer(TicTacToe game, char symbol) {
+	public MediumAlGamer(TicTacToe game, char symbol) {
+		super(game);
 		this.game = game;
 		this.symbol = symbol;
 	}
@@ -91,16 +91,6 @@ public class AlGamer implements IGamer {
 			return firstDiagonalResult;
 		}
 		return secondDiagonalResult;
-	}
-
-	private Integer[] getRandomCoordinate() {
-		int i, j;
-		Random random = new Random();
-		do {
-			i = random.nextInt(3);
-			j = random.nextInt(3);
-		} while (game.isNotEmptyCell(i, j));
-		return new Integer[]{i, j};
 	}
 
 	private char getOpponentSymbol() {

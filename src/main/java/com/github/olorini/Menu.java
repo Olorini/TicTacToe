@@ -1,41 +1,35 @@
 package com.github.olorini;
 
 import com.github.olorini.gameProcesses.GameProcess;
-import com.github.olorini.gameProcesses.GameProcessFactory;
+import com.github.olorini.gameProcesses.TicTacToe;
+import com.github.olorini.gamers.GamerFactory;
+import com.github.olorini.gamers.IGamer;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-public class Menu {
+import static com.github.olorini.gameProcesses.TicTacToe.O;
+import static com.github.olorini.gameProcesses.TicTacToe.X;
 
-	public static final List<String> USER_TYPES = Arrays.asList("user", "easy", "medium");
+public class Menu {
 
 	public void start(Scanner scanner) {
 		do {
 			System.out.println("Input command: ");
-			String[] commands = scanner.nextLine().trim().split(" ");
+			String commandsLine = scanner.nextLine().trim();
+			String[] commands = commandsLine.split(" ");
 			if (commands.length > 0) {
 				String action = commands[0];
 				if ("exit".equals(action)) {
 					return;
 				}
-				if (commands.length == 3) {
-					String firstGamer = commands[1];
-					String secondGamer = commands[2];
-					if (!"start".equals(action)
-							|| !USER_TYPES.contains(firstGamer)
-							|| !USER_TYPES.contains(secondGamer)) {
-						System.out.println("Bad parameters!");
-						continue;
-					}
-					char[][] gameState = new char[3][3];
-					fillGameField(gameState);
-					OutputUtils.showGameField(gameState);
+				if (commandsLine.matches("start( user| easy| medium){2}")) {
+					String firstGamerType = commands[1];
+					String secondGamerType = commands[2];
 					TicTacToe game = new TicTacToe();
-					game.setBoard(gameState);
-					String gamersType = firstGamer + " " + secondGamer;
-					GameProcess process = GameProcessFactory.getProcess(gamersType, game);
+					OutputUtils.showGameField(game.getBoard());
+					IGamer firstGamer = GamerFactory.create(firstGamerType, game, X);
+					IGamer secondGamer = GamerFactory.create(secondGamerType, game, O);
+					GameProcess process = new GameProcess(game, firstGamer, secondGamer);
 					process.play(scanner);
 				} else {
 					System.out.println("Bad parameters!");
@@ -44,14 +38,6 @@ public class Menu {
 				System.out.println("Bad parameters!");
 			}
 		} while (true);
-	}
-
-	private void fillGameField(char[][] gameState) {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				gameState[i][j] = TicTacToe.EMPTY;
-			}
-		}
 	}
 
 }

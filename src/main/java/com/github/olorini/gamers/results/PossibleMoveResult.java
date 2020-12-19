@@ -1,4 +1,4 @@
-package com.github.olorini;
+package com.github.olorini.gamers.results;
 
 public class PossibleMoveResult {
 
