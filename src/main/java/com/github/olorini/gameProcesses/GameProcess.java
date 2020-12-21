@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class GameProcess {
 
-	private final TicTacToe gameState;
+	private final Game gameState;
 	private final IGamer firstGamer;
 	private final IGamer secondGamer;
 
-	public GameProcess(TicTacToe gameState, IGamer firstGamer, IGamer secondGamer) {
+	public GameProcess(Game gameState, IGamer firstGamer, IGamer secondGamer) {
 		this.gameState = gameState;
 		this.firstGamer = firstGamer;
 		this.secondGamer = secondGamer;
@@ -20,11 +20,11 @@ public class GameProcess {
 		GameResult gameResult;
 		do {
 			firstGamer.play(scanner);
-			GameResult firstUserResult = gameState.checkGame();
+			GameResult firstUserResult = gameState.checkGameState();
 			if (firstUserResult.isNotGameOver()) {
 				secondGamer.play(scanner);
 			}
-			gameResult = gameState.checkGame();
+			gameResult = gameState.checkGameState();
 		} while (gameResult.isNotGameOver());
 		System.out.println(gameResult);
 	}

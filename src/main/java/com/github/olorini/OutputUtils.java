@@ -2,15 +2,15 @@ package com.github.olorini;
 
 public class OutputUtils {
 
-	public static void showGameField(char[][] game) {
+	public static void showGameField(char[] game) {
 		System.out.println("---------");
-		for (int i = 0; i < 3; i++) {
-			System.out.print("|");
-			for (int j = 0; j < 3; j++) {
-				System.out.print(" " + game[i][j]);
+		System.out.print("|");
+		for (int i = 0; i < 9; i++) {
+			if ( i > 0 && i % 3 == 0) {
+				System.out.print(" |\n|");
 			}
-			System.out.print(" |\n");
+			System.out.print(" " + game[i]);
 		}
-		System.out.println("---------");
+		System.out.println(" |\n---------");
 	}
 }

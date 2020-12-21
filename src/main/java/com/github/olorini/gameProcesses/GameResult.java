@@ -15,6 +15,14 @@ public enum GameResult {
 		this.isGameOver = isGameOver;
 	}
 
+	public boolean isDraw() {
+		return this == DRAW;
+	}
+
+	public boolean isEveryoneWon() {
+		return this == X_WINS || this == O_WINS;
+	}
+
 	public boolean isNotGameOver() {
 		return !isGameOver;
 	}

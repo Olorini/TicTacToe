@@ -1,7 +1,7 @@
 package com.github.olorini.gamers;
 
 import com.github.olorini.OutputUtils;
-import com.github.olorini.gameProcesses.TicTacToe;
+import com.github.olorini.gameProcesses.Game;
 
 import java.util.Scanner;
 
@@ -10,10 +10,10 @@ import java.util.Scanner;
  */
 public class EasyAlGamer extends AIGamer implements IGamer {
 
-	private final TicTacToe game;
+	private final Game game;
 	private final char symbol;
 
-	public EasyAlGamer(TicTacToe game, char symbol) {
+	public EasyAlGamer(Game game, char symbol) {
 		super(game);
 		this.game = game;
 		this.symbol = symbol;
@@ -22,12 +22,13 @@ public class EasyAlGamer extends AIGamer implements IGamer {
 	@Override
 	public void play(Scanner scanner) {
 		System.out.println("Making move level \"easy\"");
+		game.setCurrentSymbol(symbol);
 		makeMove();
 		OutputUtils.showGameField(game.getBoard());
 	}
 
 	private void makeMove() {
-		Integer[] moveCoordinate = getRandomCoordinate();
-		game.fillCell(moveCoordinate[0], moveCoordinate[1], symbol);
+		int moveCoordinate = calculateRandomMove();
+		game.fillCell(moveCoordinate, symbol);
 	}
 }

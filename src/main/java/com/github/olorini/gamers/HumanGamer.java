@@ -1,17 +1,23 @@
 package com.github.olorini.gamers;
 
 import com.github.olorini.OutputUtils;
-import com.github.olorini.gameProcesses.TicTacToe;
-import com.github.olorini.gamers.results.ValidationResult;
+import com.github.olorini.gameProcesses.Game;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class HumanGamer implements IGamer {
 
-	private final TicTacToe game;
+	public static final List<String> GAME_COORDINATES = new ArrayList<>(
+			Arrays.asList("11", "12", "13", "21", "22", "23", "31", "32", "33")
+	);
+
+	private final Game game;
 	private final char symbol;
 
-	public HumanGamer(TicTacToe game, char symbol) {
+	public HumanGamer(Game game, char symbol) {
 		this.game = game;
 		this.symbol = symbol;
 	}
@@ -21,13 +27,11 @@ public class HumanGamer implements IGamer {
 		System.out.println("Enter the coordinates:");
 		String coordinatesLine = scanner.nextLine().trim().replace(" ", "");
 		char[] userCoordinates = coordinatesLine.toCharArray();
-		int i = userCoordinates[0] - '0';
-		int j = userCoordinates[1] - '0';
-		int[] digitCoordinates = new int[] {i - 1, j - 1};
+		int gameCoordinate = GAME_COORDINATES.indexOf(coordinatesLine);
 
-		ValidationResult validationResult = isValidCoordinates(game, userCoordinates, digitCoordinates);
+		ValidationResult validationResult = isValidCoordinates(game, userCoordinates, gameCoordinate);
 		if (validationResult == ValidationResult.OK) {
-			makeMove(digitCoordinates[0], digitCoordinates[1]);
+			makeMove(gameCoordinate);
 			OutputUtils.showGameField(game.getBoard());
 		} else {
 			System.out.println(validationResult);
@@ -35,20 +39,20 @@ public class HumanGamer implements IGamer {
 		}
 	}
 
-	public void makeMove(int i, int j) {
-		game.fillCell(i, j, symbol);
+	public void makeMove(int coordinate) {
+		game.fillCell(coordinate, symbol);
 	}
 
-	private ValidationResult isValidCoordinates(TicTacToe game,
+	private ValidationResult isValidCoordinates(Game game,
 	                                            char[] userCoordinates,
-	                                            int[] realCoordinates) {
+	                                            int coordinate) {
 		if (!areDigits(userCoordinates)) {
 			return ValidationResult.NOT_NUMBER;
 		}
 		if (!areInRange(userCoordinates)) {
 			return ValidationResult.NOT_IN_RANGE;
 		}
-		if (game.isNotEmptyCell(realCoordinates[0], realCoordinates[1])) {
+		if (game.isNotEmptyCell(coordinate)) {
 			return ValidationResult.OCCUPIED;
 		}
 		return ValidationResult.OK;

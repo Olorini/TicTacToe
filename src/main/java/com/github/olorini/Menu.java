@@ -1,14 +1,14 @@
 package com.github.olorini;
 
 import com.github.olorini.gameProcesses.GameProcess;
-import com.github.olorini.gameProcesses.TicTacToe;
+import com.github.olorini.gameProcesses.Game;
 import com.github.olorini.gamers.GamerFactory;
 import com.github.olorini.gamers.IGamer;
 
 import java.util.Scanner;
 
-import static com.github.olorini.gameProcesses.TicTacToe.O;
-import static com.github.olorini.gameProcesses.TicTacToe.X;
+import static com.github.olorini.gameProcesses.Game.O;
+import static com.github.olorini.gameProcesses.Game.X;
 
 public class Menu {
 
@@ -22,10 +22,10 @@ public class Menu {
 				if ("exit".equals(action)) {
 					return;
 				}
-				if (commandsLine.matches("start( user| easy| medium){2}")) {
+				if (commandsLine.matches("start( user| easy| medium| hard){2}")) {
 					String firstGamerType = commands[1];
 					String secondGamerType = commands[2];
-					TicTacToe game = new TicTacToe();
+					Game game = new Game();
 					OutputUtils.showGameField(game.getBoard());
 					IGamer firstGamer = GamerFactory.create(firstGamerType, game, X);
 					IGamer secondGamer = GamerFactory.create(secondGamerType, game, O);
