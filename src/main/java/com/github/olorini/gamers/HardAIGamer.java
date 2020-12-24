@@ -28,7 +28,12 @@ public class HardAIGamer extends AIGamer implements IGamer {
 	}
 
 	private void makeMove() {
-		int i = calculateTheBestMove(0, new HashMap<>());
+		int i;
+		if (game.getEmptyCells().size() == 9) {
+			i = calculateRandomMove();
+		} else {
+			i = calculateTheBestMove(0, new HashMap<>());
+		}
 		game.fillCell(i, symbol);
 	}
 
