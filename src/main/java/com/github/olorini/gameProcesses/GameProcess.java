@@ -4,6 +4,9 @@ import com.github.olorini.gamers.IGamer;
 
 import java.util.Scanner;
 
+/**
+ * The class launches the process of Tic-Tac-Toe game
+ */
 public class GameProcess {
 
 	private final Game gameState;
@@ -16,6 +19,10 @@ public class GameProcess {
 		this.secondGamer = secondGamer;
 	}
 
+	/**
+	 * This method starts the game process, performing commands at the console
+	 * @param scanner - command text scanner
+	 */
 	public void play(Scanner scanner) {
 		GameResult gameResult;
 		do {

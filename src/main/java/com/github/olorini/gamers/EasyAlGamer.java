@@ -1,33 +1,29 @@
 package com.github.olorini.gamers;
 
-import com.github.olorini.OutputUtils;
 import com.github.olorini.gameProcesses.Game;
 
-import java.util.Scanner;
-
 /**
- * Artificial intelligence
+ *
+ * The class make moves from Artificial intelligence
+ * which has low level of mental activity
+ *
  */
-public class EasyAlGamer extends AIGamer implements IGamer {
+public class EasyAlGamer extends AIGamer {
 
 	private final Game game;
 	private final char symbol;
 
 	public EasyAlGamer(Game game, char symbol) {
-		super(game);
+		super(game, "easy", symbol);
 		this.game = game;
 		this.symbol = symbol;
 	}
 
+	/**
+	 * Plays completely random moves.
+	 */
 	@Override
-	public void play(Scanner scanner) {
-		System.out.println("Making move level \"easy\"");
-		game.setCurrentSymbol(symbol);
-		makeMove();
-		OutputUtils.showGameField(game.getBoard());
-	}
-
-	private void makeMove() {
+	public void makeMove() {
 		int moveCoordinate = calculateRandomMove();
 		game.fillCell(moveCoordinate, symbol);
 	}

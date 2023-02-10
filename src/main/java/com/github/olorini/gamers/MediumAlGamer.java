@@ -1,34 +1,33 @@
 package com.github.olorini.gamers;
 
-import com.github.olorini.OutputUtils;
 import com.github.olorini.gameProcesses.Game;
 import com.github.olorini.gameProcesses.GameResult;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 /**
- * Artificial intelligence
+ *
+ * The class make moves from Artificial intelligence
+ * which has medium level of mental activity
+ *
  */
-public class MediumAlGamer extends AIGamer implements IGamer {
+public class MediumAlGamer extends AIGamer {
 
 	private final Game game;
 	private final char symbol;
 
 	public MediumAlGamer(Game game, char symbol) {
-		super(game);
+		super(game, "medium", symbol);
 		this.game = game;
 		this.symbol = symbol;
 	}
 
+	/**
+	 * Check whether the adversary may win
+	 * make a confronted move
+	 */
 	@Override
-	public void play(Scanner scanner) {
-		System.out.println("Making move level \"medium\"");
-		makeMove();
-		OutputUtils.showGameField(game.getBoard());
-	}
-
-	private void makeMove() {
+	public void makeMove() {
 		int i = calculateMoveBetterThanRandom();
 		game.fillCell(i, symbol);
 	}
@@ -45,7 +44,7 @@ public class MediumAlGamer extends AIGamer implements IGamer {
 		}
 	}
 
-	Optional<Integer> findWinningPosition() {
+	private Optional<Integer> findWinningPosition() {
 		for (int cellId : game.getEmptyCells()) {
 			game.fillCell(cellId, game.getCurrentSymbol());
 			GameResult gameState = game.checkGameState();

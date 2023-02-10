@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class describes the state of Tic-Tac-Toe game board
+ */
 public class Game {
 
 	public static final char X = 'X';
@@ -18,10 +21,6 @@ public class Game {
 		for (int i = 0; i < 9; i++) {
 			fillCell(i, EMPTY);
 		}
-	}
-
-	public Game(char[] board) {
-		this.board = board;
 	}
 
 	public char[] getBoard() {
@@ -42,19 +41,44 @@ public class Game {
 		return board[i] != EMPTY;
 	}
 
-	public boolean isEmptyCell(int i) {
-		return board[i] == EMPTY;
-	}
-
 	public void fillCell(int i, char symbol) {
 		board[i] = symbol;
 	}
 
-	public boolean areEqualsCells(int i, int j) {
-		return board[i] == board[j];
+	/**
+	 * Check the game board and return the result of player's move
+	 */
+	public GameResult checkGameState() {
+		Optional<Character> winnerSymbol = getWinnerSymbol();
+		if (winnerSymbol.isPresent()) {
+			return getVictoryResult(winnerSymbol.get());
+		}
+		for (int i = 0; i < 9; i++) {
+			if (isEmptyCell(i)) {
+				return GameResult.NOT_FINISHED;
+			}
+		}
+		return GameResult.DRAW;
 	}
 
-	public Optional<Character> getWinnerSymbol() {
+	public char getCurrentSymbol() {
+		return currentSymbol;
+	}
+
+	public void setCurrentSymbol(char currentSymbol) {
+		this.currentSymbol = currentSymbol;
+	}
+
+	public void changeCurrentSymbol() {
+		this.currentSymbol = (currentSymbol == X) ? O : X;
+	}
+
+	/**
+	 * Check the board and
+	 * Return the symbol of the gamer, who won the game
+	 * or empty value if nobody won
+	 */
+	private Optional<Character> getWinnerSymbol() {
 		for (int i = 0; i < 3; i++) {
 			if (isNotEmptyCell(i) && areEqualsCells(i, i + 3) && areEqualsCells(i + 3, i + 6)) {
 				return Optional.of(board[i]);
@@ -74,32 +98,15 @@ public class Game {
 		return Optional.empty();
 	}
 
-	public GameResult checkGameState() {
-		Optional<Character> winnerSymbol = getWinnerSymbol();
-		if (winnerSymbol.isPresent()) {
-			return getVictoryResult(winnerSymbol.get());
-		}
-		for (int i = 0; i < 9; i++) {
-			if (isEmptyCell(i)) {
-				return GameResult.NOT_FINISHED;
-			}
-		}
-		return GameResult.DRAW;
+	private boolean areEqualsCells(int i, int j) {
+		return board[i] == board[j];
+	}
+
+	private boolean isEmptyCell(int i) {
+		return board[i] == EMPTY;
 	}
 
 	private GameResult getVictoryResult(char symbol) {
 		return (symbol == X) ? GameResult.X_WINS : GameResult.O_WINS;
-	}
-
-	public char getCurrentSymbol() {
-		return currentSymbol;
-	}
-
-	public void setCurrentSymbol(char currentSymbol) {
-		this.currentSymbol = currentSymbol;
-	}
-
-	public void changeCurrentSymbol() {
-		this.currentSymbol = (currentSymbol == X) ? O : X;
 	}
 }

@@ -1,33 +1,30 @@
 package com.github.olorini.gamers;
 
-import com.github.olorini.OutputUtils;
 import com.github.olorini.gameProcesses.Game;
 import com.github.olorini.gameProcesses.GameResult;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-public class HardAIGamer extends AIGamer implements IGamer {
+/**
+ *
+ * The class make moves from Artificial intelligence
+ * which has high level of mental activity
+ *
+ */
+public class HardAIGamer extends AIGamer {
 
 	private final Game game;
 	private final char symbol;
 
 	public HardAIGamer(Game game, char symbol) {
-		super(game);
+		super(game, "hard", symbol);
 		this.game = game;
 		this.symbol = symbol;
 	}
 
 	@Override
-	public void play(Scanner scanner) {
-		System.out.println("Making move level \"hard\"");
-		game.setCurrentSymbol(symbol);
-		makeMove();
-		OutputUtils.showGameField(game.getBoard());
-	}
-
-	private void makeMove() {
+	public void makeMove() {
 		int i;
 		if (game.getEmptyCells().size() == 9) {
 			i = calculateRandomMove();

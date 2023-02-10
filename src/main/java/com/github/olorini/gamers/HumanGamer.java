@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The class carries out commands from human
+ */
 public class HumanGamer implements IGamer {
 
 	public static final List<String> GAME_COORDINATES = new ArrayList<>(
@@ -22,6 +25,11 @@ public class HumanGamer implements IGamer {
 		this.symbol = symbol;
 	}
 
+	/**
+	 * Read coordinates, check them
+	 * Make a next move on the game board or display an error message
+	 * @param scanner command text scanner
+	 */
 	@Override
 	public void play(Scanner scanner) {
 		System.out.println("Enter the coordinates:");
@@ -39,7 +47,7 @@ public class HumanGamer implements IGamer {
 		}
 	}
 
-	public void makeMove(int coordinate) {
+	private void makeMove(int coordinate) {
 		game.fillCell(coordinate, symbol);
 	}
 
